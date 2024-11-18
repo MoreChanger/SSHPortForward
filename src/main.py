@@ -21,19 +21,25 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import logging
 from datetime import datetime
 
-# 在MainWindow类之前添加路径管理函数
+# 修改get_app_path函数
 def get_app_path(relative_path):
     """获取应用资源的绝对路径"""
     if getattr(sys, 'frozen', False):
         # 如果是打包后的可执行文件
         base_path = os.path.dirname(sys.executable)
     else:
-        # 如果是开发环境，所有文件都放在src目录下
-        base_path = os.path.dirname(os.path.abspath(__file__))
+        # 如果是开发环境
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         
-    return os.path.join(base_path, relative_path)
+    # 根据文件类型确定存储位置
+    if relative_path in ['config.json', 'history.json', 'settings.json', 'encryption.key', 'icon.ico']:
+        return os.path.join(base_path, 'data', relative_path)
+    elif relative_path.endswith('.log'):
+        return os.path.join(base_path, 'logs', relative_path)
+    else:
+        return os.path.join(base_path, relative_path)
 
-# 在MainWindow类之前添加日志配置
+# 修改setup_logger函数
 def setup_logger():
     """配置日志系统"""
     try:
@@ -191,17 +197,25 @@ class SSHTunnelThread(QThread):
 class MainWindow(QMainWindow):
     def __init__(self):
         logger.info("初始化应用程序...")
-        self.init_encryption()
         super().__init__()
         
-        # 所有置文件都���在src目录下
+        # 确保data目录存在
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
+        if not os.path.exists(data_dir):
+            os.makedirs(data_dir)
+        
+        # 初始化加密
+        self.init_encryption()
+        
+        # 配置文件路径
         self.config_file = get_app_path('config.json')
         self.history_file = get_app_path('history.json')
         self.configs = self.load_configs()
         self.history = self.load_history()
         
-        # 设置窗口图标（放在src目录下）
-        icon = QIcon(get_app_path('icon.png'))
+        # 设置窗口图标
+        icon_path = get_app_path('icon.ico')
+        icon = QIcon(icon_path)
         if not icon.isNull():
             self.setWindowIcon(icon)
         else:
@@ -645,7 +659,7 @@ class MainWindow(QMainWindow):
                                       text=default_name)
         
         if ok:
-            if not name.strip():  # 如果用户清空了输，使用默认称
+            if not name.strip():  # 如果用户清空了，使用默认名称
                 name = default_name
             
             config = {
@@ -1026,13 +1040,13 @@ class MainWindow(QMainWindow):
         QMessageBox.information(self, '成功', '所有参数已清空')
 
     def init_tray(self):
-        """始化系统托盘"""
+        """初始化系统托盘"""
         logger.info("初始化系统托盘...")
         try:
             self.tray_icon = QSystemTrayIcon(self)
             logger.info("托盘图标对象创建成功")
             
-            icon_path = get_app_path('icon.png')
+            icon_path = get_app_path('icon.ico')
             logger.info(f"尝试加载图标: {icon_path}")
             
             icon = QIcon(icon_path)
@@ -1372,7 +1386,7 @@ class MainWindow(QMainWindow):
 
     def show_connection_history(self):
         """显示连接历史记录"""
-        # 创建���话框并移除问号按钮
+        # 创建话框并移除问号按钮
         self.history_dialog = QDialog(self)
         self.history_dialog.setWindowFlags(self.history_dialog.windowFlags() & ~Qt.WindowContextHelpButtonHint)  # 移除问号按钮
         self.history_dialog.setWindowTitle("连接历史记录")
