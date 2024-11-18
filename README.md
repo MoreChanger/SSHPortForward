@@ -58,16 +58,19 @@ python src/main.py
 
 ```
 SSHPortForward/
-├── src/                  # 源代码目录
-├── data/                 # 配置文件和数据存储目录
-│   ├── config.json      # 保存的连接配置
-│   ├── history.json     # 连接历史记录
-│   ├── settings.json    # 程序设置
-│   └── encryption.key   # 密码加密密钥
-├── logs/                 # 运行日志目录
-├── requirements.txt
-├── README.md
-└── LICENSE
+├── src/                      # 源代码目录
+│   └── main.py               # 主程序
+├── data/                     # 配置文件和数据存储目录
+│   ├── config.json           # 保存的连接配置
+│   ├── history.json          # 连接历史记录
+│   ├── settings.json         # 程序设置
+│   ├── icon.ico              # 程序图标
+│   └── encryption.key        # 密码加密密钥
+├── logs/                     # 运行日志目录
+│   └── SSHPortForward.log    # 运行日志
+├── requirements.txt          # 依赖库列表
+├── README.md                 # 项目说明
+└── LICENSE                   # 许可证
 ```
 
 ## 开发说明
