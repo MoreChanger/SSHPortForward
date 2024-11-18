@@ -56,17 +56,19 @@ python src/main.py
 
 ## 项目结构
 
+```
 SSHPortForward/
-├── src/ # 源代码目录
-├── data/ # 配置文件和数据存储目录
-│ ├── config.json # 保存的连接配置
-│ ├── history.json # 连接历史记录
-│ ├── settings.json # 程序设置
-│ └── encryption.key # 密码加密密钥
-├── logs/ # 运行日志目录
+├── src/                  # 源代码目录
+├── data/                 # 配置文件和数据存储目录
+│   ├── config.json      # 保存的连接配置
+│   ├── history.json     # 连接历史记录
+│   ├── settings.json    # 程序设置
+│   └── encryption.key   # 密码加密密钥
+├── logs/                 # 运行日志目录
 ├── requirements.txt
 ├── README.md
 └── LICENSE
+```
 
 ## 开发说明
 
