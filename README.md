@@ -1,6 +1,6 @@
-# SSH隧道管理器
+# SSHPortForward (SSH隧道管理器)
 
-一个简单易用的 SSH 反向隧道管理工具，基于 PyQt5 开发。
+一个基于Python开发的SSH反向隧道管理工具，提供图形界面，支持多配置管理、自动重连、系统托盘运行等功能，方便用户管理多个SSH隧道连接。
 
 ## 功能特点
 
@@ -54,14 +54,18 @@ python src/main.py
 - 右键托盘图标：显示快捷菜单
 - 支持后台运行
 
-## 文件说明
-
-- `data/` - 配置文件和数据存储目录
-  - `config.json` - 保存的连接配置
-  - `history.json` - 连接历史记录
-  - `settings.json` - 程序设置
-  - `encryption.key` - 密码加密密钥
-- `logs/` - 运行日志目录
+## 项目结构
+SSHPortForward/
+├── src/ # 源代码目录
+├── data/ # 配置文件和数据存储目录
+│ ├── config.json # 保存的连接配置
+│ ├── history.json # 连接历史记录
+│ ├── settings.json # 程序设置
+│ └── encryption.key # 密码加密密钥
+├── logs/ # 运行日志目录
+├── requirements.txt
+├── README.md
+└── LICENSE
 
 ## 开发说明
 
@@ -71,45 +75,6 @@ python src/main.py
 - paramiko
 - cryptography
 
-### 打包说明
-1. 安装 pyinstaller：
-
-```bash
-pip install pyinstaller
-```
-2. 运行打包脚本：
-
-```bash
-python build.py
-```
-
-3. 打包后的文件位于 `dist` 目录
-
-## 注意事项
-
-- 首次运行时会在程序所在目录创建 `data` 和 `logs` 文件夹
-- 配置文件和日志会保存在这些文件夹中
-- 请确保程序对这些目录有写入权限
-
-## 更新日志
-
-### v1.0.0
-- 初始版本发布
-- 基本功能实现
-- 支持配置管理
-- 支持系统托盘
-- 支持自动重连
-
-
 ## 开源协议
 
-本项目采用 [MIT 许可证](LICENSE)。
-
-### MIT License 简述
-
-- 可以自由使用、修改、分发本软件
-- 需要保留原始许可证和版权声明
-- 作者不承担任何责任
-- 不提供任何担保
-
-详细内容请查看 [LICENSE](LICENSE) 文件。
+本项目采用 MIT 许可证。详细内容请查看 [LICENSE](LICENSE) 文件。

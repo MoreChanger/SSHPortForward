@@ -20,22 +20,36 @@ wheels/
 .installed.cfg
 *.egg
 
-# PyInstaller
-build/
-dist/
-
-# 项目特定
-logs/
-data/
-*.log
-encryption.key
-config.json
-history.json
-settings.json
+# 虚拟环境
+venv/
+env/
+ENV/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-.DS_Store 
+.project
+.pydevproject
+.settings/
+
+# 项目特定文件
+data/
+logs/
+*.log
+encryption.key
+config.json
+history.json
+settings.json
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 打包文件
+*.spec
+*.exe
+*.dmg
+*.pkg
